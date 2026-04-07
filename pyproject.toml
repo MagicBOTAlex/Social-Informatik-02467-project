@@ -1,0 +1,35 @@
+[project]
+name = "activemachine"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "ipywidgets>=8.1.8",
+    "jupyter>=1.1.1",
+    "kagglehub>=1.0.0",
+    "keras-tuner>=1.4.8",
+    "matplotlib>=3.10.8",
+    "nltk>=3.9.4",
+    "notebook>=7.5.3",
+    "numpy>=2.4.2",
+    "py2nb>=1.1.1",
+    "python-louvain>=0.16",
+    "sci-learn>=0.1.4",
+    "scikit-learn>=1.8.0",
+    "scikit-optimize>=0.10.2",
+    "scipy>=1.17.1",
+    "seaborn>=0.13.2",
+    "tensorflow[and-cuda]>=2.20.0",
+    "torch>=2.10.0",
+    "wordcloud>=1.9.6",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+    "isort>=8.0.0",
+    "pytest>=9.0.2",
+    "ruff>=0.15.2",
+]
