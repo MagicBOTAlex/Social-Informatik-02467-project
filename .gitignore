@@ -8,3 +8,4 @@ syllabus
 solutions
 zhen**
 *.sqlite
+**__pycache__
