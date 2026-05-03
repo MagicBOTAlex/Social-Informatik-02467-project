@@ -88,7 +88,7 @@
           profile = ''
             export UV_PYTHON="$(which python3.12)"
             export UV_PYTHON_DOWNLOADS="never"
-            # export LD_LIBRARY_PATH="/usr/lib:/usr/lib64:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+            export LD_LIBRARY_PATH="/usr/lib:/usr/lib64:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
 
             unset QT_PLUGIN_PATH
             unset QT_QPA_PLATFORMTHEME
