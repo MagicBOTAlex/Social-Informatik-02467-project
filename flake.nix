@@ -15,12 +15,17 @@
             nginxConf = pkgs.writeText "nginx.conf" ''
               error_log /dev/stdout info;
               pid /tmp/nginx.pid;
-              daemon off; 
-              worker_processes 1;
+              user root root;
               events {}
               http {
                 include ${pkgs.nginx}/conf/mime.types;
                 access_log /dev/stdout;
+
+                client_body_temp_path /tmp/nginx_client_body;
+                proxy_temp_path       /tmp/nginx_proxy_temp;
+                fastcgi_temp_path     /tmp/nginx_fastcgi_temp;
+                uwsgi_temp_path       /tmp/nginx_uwsgi_temp;
+                scgi_temp_path        /tmp/nginx_scgi_temp;
       
                 server {
                   listen 8000;
@@ -40,7 +45,7 @@
           in
           pkgs.writeShellScriptBin "server" ''
             echo "Starting Nginx File Server on http://localhost:8000"
-            exec ${pkgs.nginx}/bin/nginx -c ${nginxConf} -p $PWD -g "daemon off;"
+            exec ${pkgs.nginx}/bin/nginx -c ${nginxConf} -p $PWD -g "daemon off; error_log stderr info;"
           '';
       in
       {
