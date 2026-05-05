@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  css:
+    build: .
+    container_name: social-science
+    stdin_open: true   # keep STDIN open (like -i)
+    tty: true          # allocate a TTY (like -t)
+    ports:
+      - 3152:8000
+    volumes:
+      - nix-cache:/nix   # persist /nix (store + db + profiles)
+      - ./data:/data
+
+volumes:
+  nix-cache:

@@ -9,8 +9,49 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         nixSetuptools = pkgs.python312Packages.setuptools;
+
+        serverPkg =
+          let
+            nginxConf = pkgs.writeText "nginx.conf" ''
+              error_log /dev/stdout info;
+              pid /tmp/nginx.pid;
+              events {}
+              http {
+                include ${pkgs.nginx}/conf/mime.types;
+                access_log /dev/stdout;
+      
+                server {
+                  listen 8000;
+                  location / {
+                    root /data;
+          
+                    # Enables the directory listing
+                    autoindex on;
+          
+                    # Optional: Makes the file list look a bit nicer
+                    autoindex_exact_size off; # Shows "1MB" instead of "1048576"
+                    autoindex_localtime on;  # Uses local machine time for timestamps
+                  }
+                }
+              }
+            '';
+          in
+          pkgs.writeShellScriptBin "server" ''
+            echo "Starting Nginx File Server on http://localhost:8000"
+            exec ${pkgs.nginx}/bin/nginx -c ${nginxConf} -p $PWD -g "daemon off;"
+          '';
       in
       {
+        packages = {
+          default = serverPkg;
+          server = serverPkg;
+        };
+
+        apps.default = {
+          type = "app";
+          program = "${serverPkg}/bin/server";
+        };
+
         devShells.default = (pkgs.buildFHSEnv {
           name = "python-uv-dev";
           targetPkgs = pkgs:
