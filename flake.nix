@@ -15,6 +15,8 @@
             nginxConf = pkgs.writeText "nginx.conf" ''
               error_log /dev/stdout info;
               pid /tmp/nginx.pid;
+              daemon off; 
+              worker_processes 1;
               events {}
               http {
                 include ${pkgs.nginx}/conf/mime.types;
